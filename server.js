@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 const app = express()
 const port = 3000
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(path.join(__dirname, 'db/database12.db'));
+var db = new sqlite3.Database(path.join(__dirname, 'DB/siswa.db'));
  
 app.set("views", path.join(__dirname, "views"))
 app.set('view engine', 'ejs')
@@ -33,7 +33,7 @@ app.get('/add', function (req, res) {
 })
 
 app.post('/add', function (req, res) {
-  db.run('INSERT INTO siswa (nama, umur, tinggi,tanggallahir, ismenikah) values(?,?,?,?,?)', [req.body.nama, ParseInt(req.body.umur), ParseFloat(req.body.tinggi), req.body.tanggallahir, JSON.parse(req.body.ismenikah)], (err)=>{
+  db.run('INSERT INTO siswa (nama, umur, tinggi, tanggallahir, ismenikah) values(?,?,?,?,?)', [ req.body.nama, parseInt(req.body.umur), parseFloat(req.body.tinggi), req.body.tanggallahir, req.body.ismenikah], (err)=>{
     if(err) return res.send(err)
     res.redirect('/')
   })

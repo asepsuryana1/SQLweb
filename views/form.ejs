@@ -5,37 +5,35 @@
         <h5 class= "card-title"><%= title %></h5>
         <form action="/add" method="post">
             <div class="form-group row">
-                <label for="string" class="col-sm-2 col-form-label">Nama</label>
+                <label for="nama" class="col-sm-2 col-form-label">Nama</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="string" placeholder="string" name="nama">
+                    <input type="text" class="form-control" id="nama" placeholder="string" name="nama">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="integer" class="col-sm-2 col-form-label">Umur</label>
+                <label for="umur" class="col-sm-2 col-form-label">Umur</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="integer" placeholder="integer" name="umur">
+                    <input type="number" class="form-control" id="umur" placeholder="integer" name="umur">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="float" class="col-sm-2 col-form-label">Tinggi Badan</label>
+                <label for="tinggi" class="col-sm-2 col-form-label">Tinggi Badan</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="float" placeholder="float" name="tinggi">
+                    <input type="number" step="0.01" class="form-control" id="tinggi" placeholder="float" name="tinggi">
                 </div>
             </div>
             <div class="form-group row">
-                <label for="startDate" class="col-2 col-form-label">Tangga Lahir</label>
-                <div class="col-2">
-                    <input class="form-control" type="date" value="start date" id="startDate" name="tanggallahir">
+                <label for="tanggallahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
+                <div class="col-sm-10">
+                    <input type="date" class="form-control" id="tanggallahir" placeholder="tanggallahir" name="tanggallahir">
                 </div>
-                <div class="col-8"></div>
             </div>
             <div class="form-group row">
-                <label for="boolean" class="col-2 col-form-label">Status</label>
+                <label for="ismenikah" class="col-2 col-form-label">Status</label>
                 <div class="col-10">
-                    <select id="boolean" class="form-control" name="ismenikah">
-                        <option disabled selected>Choose the boolean...</option>
-                        <option id="boolean">True</option>
-                        <option id="boolean">False</option>
+                    <select id="ismenikah" class="form-control" name="ismenikah">
+                        <option values="true">Sudah Menikah</option>
+                        <option values="false">Belum Menikah</option>
                     </select>
                 </div>
             </div>
