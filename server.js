@@ -9,6 +9,11 @@ app.set('view engine', 'ejs')
 app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.get('/', function (req, res) {
-  res.render('index')
+  res.render('index', { data: [1,2,3] })
 })
+
+app.get('/add', function (req, res) {
+  res.render('form')
+})
+
 app.listen(port, () => console.log(`example app listening on port ${port}`))
