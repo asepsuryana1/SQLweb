@@ -1,2 +1,47 @@
 <%- include ("partials/header"); %>
+<br />
+<div class= "card">
+    <div class= "card-body"> 
+        <h5 class= "card-title"><%= title %></h5>
+        <form action="/add" method="post">
+            <div class="form-group row">
+                <label for="string" class="col-sm-2 col-form-label">Nama</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="string" placeholder="string" name="nama">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="integer" class="col-sm-2 col-form-label">Umur</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="integer" placeholder="integer" name="umur">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="float" class="col-sm-2 col-form-label">Tinggi Badan</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="float" placeholder="float" name="tinggi">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="startDate" class="col-2 col-form-label">Tangga Lahir</label>
+                <div class="col-2">
+                    <input class="form-control" type="date" value="start date" id="startDate" name="tanggallahir">
+                </div>
+                <div class="col-8"></div>
+            </div>
+            <div class="form-group row">
+                <label for="boolean" class="col-2 col-form-label">Status</label>
+                <div class="col-10">
+                    <select id="boolean" class="form-control" name="ismenikah">
+                        <option disabled selected>Choose the boolean...</option>
+                        <option id="boolean">True</option>
+                        <option id="boolean">False</option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
 <%- include ("partials/footer"); %>
