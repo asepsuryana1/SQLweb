@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path')
-var bodyParser = require('body-parser')
+const bodyParser = require('body-parser')
+const moment = require('moment')
+
 const app = express()
 const port = 3000
 var sqlite3 = require('sqlite3').verbose();
@@ -10,10 +12,8 @@ app.set("views", path.join(__dirname, "views"))
 app.set('view engine', 'ejs')
 
 app.use(bodyParser.urlencoded({ extended: false }))
- 
-// parse application/json
-app.use(bodyParser.json())
 
+app.use(bodyParser.json())
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 
@@ -21,7 +21,8 @@ app.get('/', function (req, res) {
   db.all('select * from siswa', (err, data) => {
     if(err) return res.send (err)
     console.log("hasilnya" ,data);
-    res.render('index', { data })
+    res.render('index', { data, moment
+    })
   })
  
 })
@@ -33,7 +34,7 @@ app.get('/add', function (req, res) {
 })
 
 app.post('/add', function (req, res) {
-  db.run('INSERT INTO siswa (nama, umur, tinggi, tanggallahir, ismenikah) values(?,?,?,?,?)', [ req.body.nama, parseInt(req.body.umur), parseFloat(req.body.tinggi), req.body.tanggallahir, req.body.ismenikah], (err)=>{
+  db.run('INSERT INTO siswa (nama, umur, tinggi, tanggallahir, ismenikah) values(?,?,?,?,?)', [ req.body.nama, parseInt(req.body.umur), parseFloat(req.body.tinggi), req.body.tanggallahir, JSON.parse(req.body.ismenikah)], (err)=>{
     if(err) return res.send(err)
     res.redirect('/')
   })

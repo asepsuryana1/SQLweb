@@ -1,6 +1,8 @@
 <%- include ("partials/header"); %>
-    <h1>Daftar Siswa</h1>
-    <table class="table table-stripped">
+<h1>Daftar Siswa</h1>
+<div class="card">
+    <div class="card-body">
+<table class="table table-stripped">
         <thead>
             <tr>
                 <th>ID</th>
@@ -18,12 +20,14 @@
             <td><%= item.nama %></td>
             <td><%= item.umur %></td>
             <td><%= item.tinggi %></td>
-            <td><%= item.tanggallahir %></td>
-            <td><%= item.ismenikah %></td>
+            <td><%= moment(item.tanggallahir). format('DD MMM YYYY') %></td>
+            <td><%= item.ismenikah ? 'Sudah Menikah' : 'Belum Menikah'%></td>
         </tr>
         <% }); %>
     </tbody>
     </table>
 <a href="add" class="btn btn-primary">Tambah Daftar</a>
+</div>
+</div>
 
 <%- include ("partials/footer"); %>
