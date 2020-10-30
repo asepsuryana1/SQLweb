@@ -11,6 +11,7 @@
                 <th>Tinggi</th>
                 <th>Tanggal Lahir</th>
                 <th>Status</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,9 @@
             <td><%= item.tinggi %></td>
             <td><%= moment(item.tanggallahir). format('DD MMM YYYY') %></td>
             <td><%= item.ismenikah ? 'Sudah Menikah' : 'Belum Menikah'%></td>
+            <td>
+                <a href="/delete/<%= item.id%>" class="btn btn-danger" onclick="return confirm ('klik ok untuk menghapus klik cancel untuk membatalkan')">hapus</a>
+            </td>
         </tr>
         <% }); %>
     </tbody>

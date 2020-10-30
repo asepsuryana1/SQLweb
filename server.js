@@ -39,4 +39,11 @@ app.post('/add', function (req, res) {
     res.redirect('/')
   })
   })
+
+  app.get('/delete/:id', function (req, res) {
+    db.run('DELETE FROM siswa WHERE id=?', [ parseInt(req.params.id)], (err)=>{
+      if(err) return res.send(err)
+      res.redirect('/')
+    })
+    })
 app.listen(port, () => console.log(`example app listening on port ${port}`))
