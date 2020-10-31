@@ -1,28 +1,28 @@
 <%- include ("partials/header"); %>
-<h1>Daftar Siswa</h1>
-<div class="card">
-    <div class="card-body">
-<table class="table table-stripped">
+<h1 class= "text-center">Daftar Siswa</h1>
+<div class="card bg-dark text-light">
+    <div class="card-body ">
+<table class="table table-stripped ">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nama</th>
-                <th>Umur</th>
-                <th>Tinggi</th>
-                <th>Tanggal Lahir</th>
-                <th>Status</th>
-                <th>actions</th>
+                <th class="text-danger">ID</th>
+                <th class="text-white">Nama</th>
+                <th class="text-white">Umur</th>
+                <th class="text-white">Tinggi</th>
+                <th class="text-white">Tanggal Lahir</th>
+                <th class="text-white">Status</th>
+                <th class="text-white">actions</th>
             </tr>
         </thead>
         <tbody>
             <% data.forEach(item => { %>
         <tr>
-            <td><%= item.id %></td>
-            <td><%= item.nama %></td>
-            <td><%= item.umur %></td>
-            <td><%= item.tinggi %></td>
-            <td><%= moment(item.tanggallahir). format('DD MMM YYYY') %></td>
-            <td><%= item.ismenikah ? 'Sudah Menikah' : 'Belum Menikah'%></td>
+            <td class= "text-danger"><%= item.id %></td>
+            <td class= "text-white"><%= item.nama %></td>
+            <td class= "text-white"><%= item.umur %></td>
+            <td class= "text-white"><%= item.tinggi %></td>
+            <td class= "text-white"><%= moment(item.tanggallahir). format('DD MMM YYYY') %></td>
+            <td class= "text-white"><%= item.ismenikah ? 'Sudah Menikah' : 'Belum Menikah'%></td>
             <td>
                 <a href="/delete/<%= item.id%>" class="btn btn-danger" onclick="return confirm ('klik ok untuk menghapus klik cancel untuk membatalkan')">hapus</a>
             </td>
