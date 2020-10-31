@@ -24,12 +24,12 @@ app.get('/', function (req, res) {
     res.render('index', { data, moment
     })
   })
- 
-})
+ })
 
 app.get('/add', function (req, res) {
   res.render('form', {
-    title:'form tambah'
+    title:'form tambah',
+    item: {}
   })
 })
 
@@ -39,11 +39,30 @@ app.post('/add', function (req, res) {
     res.redirect('/')
   })
   })
+  
+  app.get('/edit/:id', function (req, res) {
+  db.all('SELECT * FROM siswa WHERE id=?', [ parseInt(req.params.id)], (err, data)=>{
+    if(err) return res.send(err)
+    if(data.length == 0) res.send('data tidak ada')
+    res.render('form', {
+      title: "form edit",
+      item: data[0]
+  })
+  })
+})
 
-  app.get('/delete/:id', function (req, res) {
-    db.run('DELETE FROM siswa WHERE id=?', [ parseInt(req.params.id)], (err)=>{
+  app.post('/edit/:id', function (req, res) {
+    db.run('UPDATE siswa SET nama=?, umur=?, tinggi=?, tanggallahir=?, ismenikah=? WHERE id=?', [ req.body.nama, parseInt(req.body.umur), parseFloat(req.body.tinggi), req.body.tanggallahir, JSON.parse(req.body.ismenikah), parseInt(req.params.id)], (err)=>{
       if(err) return res.send(err)
       res.redirect('/')
     })
     })
+
+  app.get('/delete/:id', function (req, res) {
+    db.run('DELETE FROM siswa WHERE id=?', [ parseInt(req.params.id)], (err, data)=>{
+      if(err) return res.send(err)
+      res.redirect('/')
+      })
+    })
+
 app.listen(port, () => console.log(`example app listening on port ${port}`))

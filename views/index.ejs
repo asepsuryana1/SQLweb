@@ -24,6 +24,7 @@
             <td class= "text-white"><%= moment(item.tanggallahir). format('DD MMM YYYY') %></td>
             <td class= "text-white"><%= item.ismenikah ? 'Sudah Menikah' : 'Belum Menikah'%></td>
             <td>
+                <a href="/edit/<%= item.id%>" class= "btn btn-success">edit</a>
                 <a href="/delete/<%= item.id%>" class="btn btn-danger" onclick="return confirm ('klik ok untuk menghapus klik cancel untuk membatalkan')">hapus</a>
             </td>
         </tr>
