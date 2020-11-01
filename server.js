@@ -7,62 +7,79 @@ const app = express()
 const port = 3000
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(path.join(__dirname, 'DB/siswa.db'));
- 
+
 app.set("views", path.join(__dirname, "views"))
 app.set('view engine', 'ejs')
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 
 app.use(bodyParser.json())
 
 app.use('/', express.static(path.join(__dirname, 'public')))
 
-app.get('/', function (req, res) {
-  db.all('select * from siswa', (err, data) => {
-    if(err) return res.send (err)
-    console.log("hasilnya" ,data);
-    res.render('index', { data, moment
+app.get('/', (req, res) => {
+  const page = req.query.page || 1;
+  const limit = 3;
+  const offset = (page - 1) * limit
+
+  db.all('SELECT COUNT(id) as total from siswa ', (err, data) => {
+    if (err) return res.send(err)
+    if (data.length == 0) res.send('data tidak ada')
+    const total = data[0].total
+    const pages = Math.ceil(total / limit)
+
+    db.all('select * from siswa limit ? offset ?',[limit,offset], (err, data) => {
+      if (err) return res.send(err)
+      console.log("hasilnya", data);
+      res.render('index', {
+        data,
+        moment,
+        page,
+        pages
+      })
     })
   })
- })
+})
 
 app.get('/add', function (req, res) {
   res.render('form', {
-    title:'form tambah',
+    title: 'form tambah',
     item: {}
   })
 })
 
 app.post('/add', function (req, res) {
-  db.run('INSERT INTO siswa (nama, umur, tinggi, tanggallahir, ismenikah) values(?,?,?,?,?)', [ req.body.nama, parseInt(req.body.umur), parseFloat(req.body.tinggi), req.body.tanggallahir, JSON.parse(req.body.ismenikah)], (err)=>{
-    if(err) return res.send(err)
+  db.run('INSERT INTO siswa (nama, umur, tinggi, tanggallahir, ismenikah) values(?,?,?,?,?)', [req.body.nama, parseInt(req.body.umur), parseFloat(req.body.tinggi), req.body.tanggallahir, JSON.parse(req.body.ismenikah)], (err) => {
+    if (err) return res.send(err)
     res.redirect('/')
-  })
-  })
-  
-  app.get('/edit/:id', function (req, res) {
-  db.all('SELECT * FROM siswa WHERE id=?', [ parseInt(req.params.id)], (err, data)=>{
-    if(err) return res.send(err)
-    if(data.length == 0) res.send('data tidak ada')
-    res.render('form', {
-      title: "form edit",
-      item: data[0]
-  })
   })
 })
 
-  app.post('/edit/:id', function (req, res) {
-    db.run('UPDATE siswa SET nama=?, umur=?, tinggi=?, tanggallahir=?, ismenikah=? WHERE id=?', [ req.body.nama, parseInt(req.body.umur), parseFloat(req.body.tinggi), req.body.tanggallahir, JSON.parse(req.body.ismenikah), parseInt(req.params.id)], (err)=>{
-      if(err) return res.send(err)
-      res.redirect('/')
+app.get('/edit/:id', function (req, res) {
+  db.all('SELECT * FROM siswa WHERE id=?', [parseInt(req.params.id)], (err, data) => {
+    if (err) return res.send(err)
+    if (data.length == 0) res.send('data tidak ada')
+    res.render('form', {
+      title: "form edit",
+      item: data[0]
     })
-    })
+  })
+})
 
-  app.get('/delete/:id', function (req, res) {
-    db.run('DELETE FROM siswa WHERE id=?', [ parseInt(req.params.id)], (err, data)=>{
-      if(err) return res.send(err)
-      res.redirect('/')
-      })
-    })
+app.post('/edit/:id', function (req, res) {
+  db.run('UPDATE siswa SET nama=?, umur=?, tinggi=?, tanggallahir=?, ismenikah=? WHERE id=?', [req.body.nama, parseInt(req.body.umur), parseFloat(req.body.tinggi), req.body.tanggallahir, JSON.parse(req.body.ismenikah), parseInt(req.params.id)], (err) => {
+    if (err) return res.send(err)
+    res.redirect('/')
+  })
+})
+
+app.get('/delete/:id', function (req, res) {
+  db.run('DELETE FROM siswa WHERE id=?', [parseInt(req.params.id)], (err, data) => {
+    if (err) return res.send(err)
+    res.redirect('/')
+  })
+})
 
 app.listen(port, () => console.log(`example app listening on port ${port}`))
